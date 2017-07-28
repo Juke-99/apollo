@@ -1,17 +1,11 @@
-Apollo HTTP Service
+Apollo HTTPサービス
 ===================
 
 [![Maven Central](https://img.shields.io/maven-central/v/com.spotify/apollo-parent.svg)](https://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.spotify%22%20apollo*)
 
-The `apollo-http-service` library is a small bundle of Apollo modules. It incorporates both
-[apollo-api](../apollo-api) and [apollo-core](../apollo-core) and ties them together with the
-[jetty-http-server](../modules/jetty-http-server) and the [okhttp-client](../modules/okhttp-client)
-to make a complete service. It also adds `logback-classic` as an SLF4J
-implementation to give you logging capabilities.
+`apollo-http-service`ライブラリはApolloモジュールの小さなバンドルです。それは[apollo-api](../apollo-api) と[apollo-core](../apollo-core)の両方を組み込み、完全なサービスを作るための[jetty-http-server](../modules/jetty-http-server)と[okhttp-client](../modules/okhttp-client)と共にその2つを結びます。それはロギング性能を与えるためにSLF4Jの実装として`logback-classic`も加えます。
 
-Apollo HTTP Service gives you what you need to start your backend service. Here, for example, we
-tell `HttpService` to boot a service named `"ping"`, defined by the function `Ping::init`, and
-handle any command line arguments passed in through the `args` variable:
+Apollo HTTPサービスはあなたのバックエンドサービスを始めることを必要であるものを与えます。ここで、例えば、私たちが、`Ping::init`関数で定義し、`"ping"`と名付けたサービスをブートし、`args`変数を通して渡されたコマンドライン引数を扱うために`HttpService`と対話します：
 
 ```java
 public static void main(String... args) throws LoadingException {
@@ -19,12 +13,9 @@ public static void main(String... args) throws LoadingException {
 }
 ```
 
-The [HttpService](src/main/java/com/spotify/apollo/httpservice/HttpService.java)
-class is a good example of how `apollo-core` together with `apollo-api` and other modules come
-together to build a fully functional service. You can find documentation for each
-module in its respective directory under [/modules](../modules).
+[HttpService](src/main/java/com/spotify/apollo/httpservice/HttpService.java)クラスは`apollo-api`と共に`apollo-core`と他のモジュールが十分な機能的なサービスをビルドするためにどのように一緒に来るかを示す良い例です。あなたは[/modules](../modules)の下でそれぞれのディレクトリで様々なモジュールによるドキュメントを理解することができます。
 
-Minimal project skeleton
+最小の骨組みプロジェクト
 ========================
 
 ```plain
@@ -83,8 +74,7 @@ http.server.port = 8080
 http.server.port = ${?HTTP_PORT}
 ```
 
-For more information on how to manage configuration, see [Apollo Core](../apollo-core),
-the [logback-classic](http://logback.qos.ch/) and the [Typesafe Config](https://github.com/typesafehub/config) documentation.
+コンフィグレーションをどのように管理すべきかのより詳しく知りたいのなら、[Apollo Core](../apollo-core)、、[logback-classic](http://logback.qos.ch/)ドキュメントと[Typesafe Config](https://github.com/typesafehub/config)ドキュメントをみてください。
 
 ### Maven
 
@@ -172,35 +162,33 @@ the [logback-classic](http://logback.qos.ch/) and the [Typesafe Config](https://
 </project>
 ```
 
-The Maven configuration is a bit lengthy so it deserves some more explanation:
+Mavenコンフィグレーションは少し長々としているのでもう少し説明をする必要があります：
 
-* We use a property named `mainClass` to refer to our main class. This will be used later.
-* Under the `dependencyManagement` we import all the Apollo artifact versions through the `apollo-bom` artifact. For more information about importing managed dependencies, see the [Maven documentation](https://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html#Importing_Dependencies).
-* We configure the compiler plugin to target JDK 8.
-* We configure the `maven-dependency-plugin` to copy all runtime dependency jars into `${project.build.directory}/lib`. These will be referenced from the main artifact.
-* We configure `maven-jar-plugin` to add the classpath jars to the manifest, prefixed with `lib/` along with the `MainClass` entry to use our main class.
+* 私たちは自分のメインクラスを参照するために`mainClass`と名付けたプロパティを使います。これはあとで使います。
+* Under the `dependencyManagement`の下で私たちは`apollo-bom`アーキテクチャを通して全てのApolloアーティファクトバージョンをインポートします。管理依存をインポートすることに関してのより詳しい情報は[Maven documentation](https://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html#Importing_Dependencies)をみてください。
+* 私たちはJDK 8を対象とするコンパイラプラグインを設定します。
+* 私たちは`${project.build.directory}/lib`の中にある全てのランタイム依存jarをコピーするために`maven-dependency-plugin`を設定します。メインアーキファクトから参照しました。
+* 私たちは自分のメインクラスを使う`MainClass`エントリと一緒に`lib/`を付けて、マニフェストにクラスパスjarを加えるために`maven-jar-plugin`を設定します。
 
-Compile and Run
+コンパイルと起動
 ===============
 ```
 mvn package
 java -jar target/ping.jar
 ```
 
-Try a request with `curl`
+`curl`によるリクエストを試す
 ```
 $ curl http://localhost:8080/ping
 pong
 ```
 
-Logging
+ロギング
 =======
 
-The HTTP service logs incoming requests and their responses, using a default
-implementation that logs with [approximately](../modules/jetty-http-server/src/main/java/com/spotify/apollo/http/server/CombinedFormatLogger.java)
-the Apache HTTPD 'combined' format.
+[おおよその](../modules/jetty-http-server/src/main/java/com/spotify/apollo/http/server/CombinedFormatLogger.java)Apache HTTPD 'combined'フォーマットをログするデフォルトの実装を使うために、HTTPサービスは受信リクエストとこれらのレスポンスをログします。
 
-To send this to an access log file, use a configuration similar to:
+アクセスログファイルにこれを送るために、同様のコンフィグレーションを使います：
 
 ```
     <appender name="ACCESSLOG" class="ch.qos.logback.core.FileAppender">
@@ -215,8 +203,7 @@ To send this to an access log file, use a configuration similar to:
     </logger>
 ```
 
-To customise the logging implementation using [Guice optional injections](https://github.com/google/guice/wiki/Injections#optional-injections),
-do something along the lines of this:
+[Guice optional injections](https://github.com/google/guice/wiki/Injections#optional-injections)を使うロギング実装をカスタマイズするために、Guice optional injectionsのラインに沿って何かします：
 
 ```
 public class MyModule extends AbstractModule {
