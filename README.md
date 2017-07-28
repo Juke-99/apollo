@@ -6,7 +6,7 @@ Apollo
 [![Maven Central](https://img.shields.io/maven-central/v/com.spotify/apollo-parent.svg)](https://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.spotify%22%20apollo*)
 [![License](https://img.shields.io/github/license/spotify/apollo.svg)](LICENSE)
 
-Apolloは私たちがマイクロサービスを書くときにSpotifyを使うJavaライブラリのセットです。ApolloはHTTPサーバとURIルーティングシステムのようなモジュールを含み、RESTful APIサービスを実装することにどこにでもあるHTTPサーバとURIルーティングシステムを作ります。
+Apolloは私たちがマイクロサービスを書くときにSpotifyで使うJavaライブラリのセットです。ApolloはHTTPサーバとURIルーティングシステムのようなモジュールを含み、RESTful APIサービスを実装するために平凡なRESTful APIサービスを作ります。
 
 Apolloは長い間、Spotifyの製品で使われていました。バージョン1.0.0をリリースするために作業の一部として私たちはオープンにApolloの開発を移行しました。
 
@@ -16,7 +16,7 @@ Apolloに3つのメインライブラリがあります：
 * [apollo-api](apollo-api)
 * [apollo-core](apollo-core)
 
-もしメインAPIが十分に強力でない問題を解決する必要があるなら、[apollo-environment](apollo-environment)は、Apolloのコアな振る舞いをあなたに修正するために、より手を貸しましょう。
+もしメインAPIが十分に強力でない問題を解決する必要があるなら、[apollo-environment](apollo-environment)は、Apolloのコアな振る舞いを変更することができるために、より多くのフックを提供します。
 
 ### Apollo HTTPサービス
 [apollo-http-service](apollo-http-service)ライブラリはApolloモジュールの標準化されたアセンブリです。それはapollo-apiとapollo-coreの両方を組み込み、送受信によって、httpを使う標準apiサービスを取ってくるために他のモジュールと一緒につなぎます。
@@ -120,6 +120,6 @@ public final class App {
 [![Apollo in runtime](https://cdn.rawgit.com/spotify/apollo/master/website/source/runtime.svg)](website/source/runtime.svg)
 
 ## 行動規範
-このプロジェクトは[行動規範を開く][code-of-conduct]を支持します。参加することで、あなたはこのコードに貢献できると思います。
+このプロジェクトは[オープンな行動規範][code-of-conduct]を支持します。参加することで、あなたはこのコードに貢献できると思います。
 
 [code-of-conduct]: https://github.com/spotify/code-of-conduct/blob/master/code-of-conduct.md
