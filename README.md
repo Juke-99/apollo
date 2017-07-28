@@ -6,7 +6,7 @@ Apollo
 [![Maven Central](https://img.shields.io/maven-central/v/com.spotify/apollo-parent.svg)](https://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.spotify%22%20apollo*)
 [![License](https://img.shields.io/github/license/spotify/apollo.svg)](LICENSE)
 
-Apolloは私たちがマイクロサービスを書くときにSpotifyを使うJavaライブラリの集合です。ApolloはHTTPサーバとURIルーティングシステムのようなモジュールを含み、RESTful APIサービスを実装することにどこにでもあるHTTPサーバとURIルーティングシステムを作ります。
+Apolloは私たちがマイクロサービスを書くときにSpotifyを使うJavaライブラリのセットです。ApolloはHTTPサーバとURIルーティングシステムのようなモジュールを含み、RESTful APIサービスを実装することにどこにでもあるHTTPサーバとURIルーティングシステムを作ります。
 
 Apolloは長い間、Spotifyの製品で使われていました。バージョン1.0.0をリリースするために作業の一部として私たちはオープンにApolloの開発を移行しました。
 
@@ -32,23 +32,16 @@ public static void init(Environment environment) {
 }
 ```
 
-
-The apollo-api library provides several ways to help you define your request/reply handlers.
-You can specify how responses should be serialized (such as JSON). Read more about
-this library in the [Apollo API Readme](apollo-api).
+apollo-apiライブラリはあなたのリクエスト/リプライハンドラを定義するのを助けるための様々な方法を提供してくれます。あなたはレスポンスが（JSONのような）シリアライズをどのようにするかを特定することができます。[Apollo API Readme](apollo-api)でこのライブラリについてより詳しくわかります。
 
 ### Apollo Core
-The [apollo-core](apollo-core) library manages the lifecycle (loading, starting, and stopping) of
-your service. You do not usually need to interact directly with apollo-core; think of it merely
-as "plumbing". For more information about this library, see the [Apollo Core Readme](apollo-core).
+[apollo-core](apollo-core)ライブラリはあなたのサービスのライフサイクル（ローディング、スターティング、そしてストッピング）を管理します。あなたはapollo-coreを直接触れる必要があまりありません。"プレミング"（<- 原文ではplumbing）として単に思います。このライブラリについてより情報が欲しいのなら、[Apollo Core Readme](apollo-core)をみてください。
 
 ### Apollo Test
-In addition to the three main Apollo libraries listed above, to help you write tests for your
-service we have an additional library called [apollo-test](apollo-test). It has helpers to set up
-a service for testing, and to mock outgoing request responses.
+3つのメインApolloライブラリを一覧にすることも加えて、あなたのサービスのテストを書くことを助けるために私たちは[apollo-test](apollo-test)を呼ぶ追加のライブラリを持ちます。それはテスト中のサービスを準備し、送信リクエストレスポンスをモック（まね）するためのヘルパーを持ちます。
 
-### Getting Started with Apollo
-Apollo will be distributed as a set of Maven artifacts, which makes it easy to get started no matter the build tool; Maven, Ant + Ivy or Gradle. Below is a very simple but functional service — more extensive examples are available in the [examples](examples) directory. Until these are released, you can build and install Apollo from source by running `mvn install`.
+### Apollo入門
+ApolloはMavenアーキテクチャのセットとして配布されています。Apolloはビルドツール（Maven、Ant + IvyもしくはGradle）関係なく入門することが簡単です。以下はとても単純ですが機能的なサービスです。より広範な例が[examples](examples)ディレクトリにあります。これらがリリースされるまで、あなたは`mvn install`を起動することでソースからApolloをビルドとインストールできます。
 
 ```java
 public final class App {
@@ -64,10 +57,10 @@ public final class App {
  }
 ```
 
-### Apollo Metadata
-[Metadata](apollo-api-impl/src/main/java/com/spotify/apollo/meta/model) about an Apollo-based service, such as endpoints, is generated at runtime. At Spotify we use this to keep track of our running services. More info can be found [here](https://apidays.nz/slides/iglesias_service_metadata.pdf).
+### Apolloメタデータ
+エンドポイントのような、Apollo-basedサービスについて[Metadata](apollo-api-impl/src/main/java/com/spotify/apollo/meta/model)はランタイムを出します。Spotifyで私たちは私たちのランタイムサービスのトラックを保つのにこれを使いました。より詳細な情報は [ここ](https://apidays.nz/slides/iglesias_service_metadata.pdf)で理解することができます。
 
-Examples from [spotify-api-example](examples/spotify-api-example):
+[spotify-api-example](examples/spotify-api-example)からの例:
 
 `$ curl http://localhost:8080/_meta/0/endpoints`
 
@@ -114,19 +107,19 @@ Examples from [spotify-api-example](examples/spotify-api-example):
 }
 ```
 
-### Links
+### リンク
 
 [Introduction Website](https://spotify.github.io/apollo)<br />
 [JavaDocs](https://spotify.github.io/apollo/maven/apidocs)<br />
 [Maven site](https://spotify.github.io/apollo/maven)
 
-### Diagrams
+### 図解
 
 [![Apollo set-up](https://cdn.rawgit.com/spotify/apollo/master/website/source/set-up.svg)](website/source/set-up.svg)
 
 [![Apollo in runtime](https://cdn.rawgit.com/spotify/apollo/master/website/source/runtime.svg)](website/source/runtime.svg)
 
-## Code of conduct
-This project adheres to the [Open Code of Conduct][code-of-conduct]. By participating, you are expected to honor this code.
+## 行動規範
+このプロジェクトは[行動規範を開く][code-of-conduct]を支持します。参加することで、あなたはこのコードに貢献できると思います。
 
 [code-of-conduct]: https://github.com/spotify/code-of-conduct/blob/master/code-of-conduct.md
