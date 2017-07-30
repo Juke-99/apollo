@@ -3,9 +3,9 @@ Apollo HTTPサービス
 
 [![Maven Central](https://img.shields.io/maven-central/v/com.spotify/apollo-parent.svg)](https://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.spotify%22%20apollo*)
 
-`apollo-http-service`ライブラリはApolloモジュールの小さなバンドルです。それは[apollo-api](../apollo-api) と[apollo-core](../apollo-core)の両方を組み込み、完全なサービスを作るための[jetty-http-server](../modules/jetty-http-server)と[okhttp-client](../modules/okhttp-client)と共にその2つを結びます。それはロギング性能を与えるためにSLF4Jの実装として`logback-classic`も加えます。
+`apollo-http-service`ライブラリはApolloモジュールの小さなバンドルです。[apollo-api](../apollo-api) と[apollo-core](../apollo-core)の両方を組み込み、完全なサービスを作るために[jetty-http-server](../modules/jetty-http-server)と[okhttp-client](../modules/okhttp-client)の2つを結びつけます。ロギング性能を持つためにSLF4Jの実装として`logback-classic`も加えます。
 
-Apollo HTTPサービスはあなたのバックエンドサービスを始めることを必要であるものを与えます。ここで、例えば、私たちが、`Ping::init`関数で定義し、`"ping"`と名付けたサービスをブートし、`args`変数を通して渡されたコマンドライン引数を扱うために`HttpService`と対話します：
+Apollo HTTPサービスは自分のバックエンドサービスを始めるのに必要なものをくれます。ここで、例えば、私たちが、`Ping::init`関数で定義し、`"ping"`と名付けたサービスをブートし、`args`変数を通して渡されたコマンドライン引数を扱うために`HttpService`と対話します：
 
 ```java
 public static void main(String... args) throws LoadingException {
@@ -13,7 +13,7 @@ public static void main(String... args) throws LoadingException {
 }
 ```
 
-[HttpService](src/main/java/com/spotify/apollo/httpservice/HttpService.java)クラスは`apollo-api`と共に`apollo-core`と他のモジュールが十分な機能的なサービスをビルドするためにどのように一緒に来るかを示す良い例です。あなたは[/modules](../modules)の下でそれぞれのディレクトリで様々なモジュールによるドキュメントを理解することができます。
+[HttpService](src/main/java/com/spotify/apollo/httpservice/HttpService.java)クラスは`apollo-api`と一緒に`apollo-core`と他のモジュールが十分な機能的なサービスをビルドするためにどのように一緒に呼び出されるかを示す良い例です。あなたは[/modules](../modules)の下でそれぞれのディレクトリで様々なモジュールのドキュメントを理解することができます。
 
 最小の骨組みプロジェクト
 ========================
@@ -74,7 +74,7 @@ http.server.port = 8080
 http.server.port = ${?HTTP_PORT}
 ```
 
-構成をどのように管理すべきかのより詳しく知りたいのなら、[Apollo Core](../apollo-core)、、[logback-classic](http://logback.qos.ch/)ドキュメントと[Typesafe Config](https://github.com/typesafehub/config)ドキュメントをみてください。
+構成をどのように管理するべきか、より詳しく知りたい場合、[Apollo Core](../apollo-core)、[logback-classic](http://logback.qos.ch/)ドキュメントと[Typesafe Config](https://github.com/typesafehub/config)ドキュメントをみてください。
 
 ### Maven
 
@@ -164,11 +164,11 @@ http.server.port = ${?HTTP_PORT}
 
 Maven構成は少し長々としているのでもう少し説明をする必要があります：
 
-* 私たちは自分のメインクラスを参照するために`mainClass`と名付けたプロパティを使います。これはあとで使います。
-* Under the `dependencyManagement`の下で私たちは`apollo-bom`アーキテクチャを通して全てのApolloアーティファクトバージョンをインポートします。管理依存をインポートすることに関してのより詳しい情報は[Maven documentation](https://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html#Importing_Dependencies)をみてください。
+* 自分のメインクラスを参照するために`mainClass`と名付けたプロパティを使います。これはあとで使います。
+* `dependencyManagement`の下で`apollo-bom`アーキテクチャを通して全てのApolloアーティファクトバージョンをインポートします。管理依存をインポートするためのより詳しい情報は[Maven documentation](https://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html#Importing_Dependencies)をみてください。
 * 私たちはJDK 8を対象とするコンパイラプラグインを設定します。
-* 私たちは`${project.build.directory}/lib`の中にある全てのランタイム依存jarをコピーするために`maven-dependency-plugin`を設定します。メインアーキファクトから参照しました。
-* 私たちは自分のメインクラスを使う`MainClass`エントリと一緒に`lib/`を付けて、マニフェストにクラスパスjarを加えるために`maven-jar-plugin`を設定します。
+* `${project.build.directory}/lib`の中にある全てのランタイム依存jarをコピーするために`maven-dependency-plugin`を設定します。メインアーキファクトから参照しました。
+* 自分のメインクラスを使う`MainClass`エントリと一緒に`lib/`を付けて、マニフェストにクラスパスjarを加えるために`maven-jar-plugin`を設定します。
 
 コンパイルと起動
 ===============
@@ -186,7 +186,7 @@ pong
 ロギング
 =======
 
-[おおよその](../modules/jetty-http-server/src/main/java/com/spotify/apollo/http/server/CombinedFormatLogger.java)Apache HTTPD 'combined'フォーマットをログするデフォルトの実装を使うために、HTTPサービスは受信リクエストとこれらのレスポンスをログします。
+[おおよその](../modules/jetty-http-server/src/main/java/com/spotify/apollo/http/server/CombinedFormatLogger.java)Apache HTTPD 'combined'フォーマットを記録するデフォルトの実装を使うのに、HTTPサービスは受信リクエストとこれらのレスポンスをログします。
 
 アクセスログファイルにこれを送るために、同様の構成を使います：
 
@@ -203,7 +203,7 @@ pong
     </logger>
 ```
 
-[Guice optional injections](https://github.com/google/guice/wiki/Injections#optional-injections)を使うロギング実装をカスタマイズするために、Guice optional injectionsのラインに沿って何かします：
+[Guice optional injections](https://github.com/google/guice/wiki/Injections#optional-injections)を使うロギング実装をカスタマイズするために、Guice optional injectionsのやり方で何かします：
 
 ```
 public class MyModule extends AbstractModule {
