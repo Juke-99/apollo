@@ -1,15 +1,14 @@
 # Apollo API
 
-This Apollo library gives you the tools you need to define your service routes and your
-request/reply handlers. For some overview documentation, see:
+このApolloライブラリはあなたが自分のサービスルートと自分のリクエスト/リプライハンドラであるツールを与えます。いくつかの概要文書によって、以下をご覧ください：
 
 * [AppInit & Environment](docs/app-init-environment.md)
-* [Routing Engine](docs/routing-engine.md)
-* [Routes](docs/routes.md)
-* [Response](docs/response.md)
-* [Middleware](docs/middleware.md)
+* [ルーティングエンジン](docs/routing-engine.md)
+* [ルート](docs/routes.md)
+* [レスポンス](docs/response.md)
+* [ミドルウェア](docs/middleware.md)
 
-## Just give me the bare minimum
+## 最低限のことをちょうど与えます
 
 ### 1. `src/main/java/com/spotify/Small.java`
 
@@ -48,10 +47,9 @@ public final class Small {
 }
 ```
 
-### 2. Build it with Maven!
+### 2. Mavenでビルド！
 
-Add a dependency to `apollo-http-service` to your `pom.xml`. Use a build property for the
-version since you'll need it later in the build configuration.
+`apollo-http-service` to your あなたの`pom.xml`の`apollo-http-service`の依存を加えます。あなたがビルド構成をあとで必要としてからバージョンのビルドプロパティを使います。
 
 ```xml
 <properties>
@@ -78,7 +76,7 @@ version since you'll need it later in the build configuration.
 </dependencies>
 ```
 
-Set up the build to produce a jar with a classpath pointing to the dependency jars under `lib/`
+`lib/`の下に依存jarを置いてクラスパスによってjarを作るためのビルドを準備してください。
 
 ```xml
 <build>
@@ -139,14 +137,14 @@ Set up the build to produce a jar with a classpath pointing to the dependency ja
 </build>
 ```
 
-### 3. Build & Run it!
+### 3. ビルドと起動！
 
 ```
 mvn package
 java -jar target/small.jar -Dhttp.server.port=8080
 ```
 
-### 4. Curl it!
+### 4. Curl！
 
 ```
 curl http://localhost:8080/

@@ -74,7 +74,7 @@ http.server.port = 8080
 http.server.port = ${?HTTP_PORT}
 ```
 
-コンフィグレーションをどのように管理すべきかのより詳しく知りたいのなら、[Apollo Core](../apollo-core)、、[logback-classic](http://logback.qos.ch/)ドキュメントと[Typesafe Config](https://github.com/typesafehub/config)ドキュメントをみてください。
+構成をどのように管理すべきかのより詳しく知りたいのなら、[Apollo Core](../apollo-core)、、[logback-classic](http://logback.qos.ch/)ドキュメントと[Typesafe Config](https://github.com/typesafehub/config)ドキュメントをみてください。
 
 ### Maven
 
@@ -162,7 +162,7 @@ http.server.port = ${?HTTP_PORT}
 </project>
 ```
 
-Mavenコンフィグレーションは少し長々としているのでもう少し説明をする必要があります：
+Maven構成は少し長々としているのでもう少し説明をする必要があります：
 
 * 私たちは自分のメインクラスを参照するために`mainClass`と名付けたプロパティを使います。これはあとで使います。
 * Under the `dependencyManagement`の下で私たちは`apollo-bom`アーキテクチャを通して全てのApolloアーティファクトバージョンをインポートします。管理依存をインポートすることに関してのより詳しい情報は[Maven documentation](https://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html#Importing_Dependencies)をみてください。
@@ -188,7 +188,7 @@ pong
 
 [おおよその](../modules/jetty-http-server/src/main/java/com/spotify/apollo/http/server/CombinedFormatLogger.java)Apache HTTPD 'combined'フォーマットをログするデフォルトの実装を使うために、HTTPサービスは受信リクエストとこれらのレスポンスをログします。
 
-アクセスログファイルにこれを送るために、同様のコンフィグレーションを使います：
+アクセスログファイルにこれを送るために、同様の構成を使います：
 
 ```
     <appender name="ACCESSLOG" class="ch.qos.logback.core.FileAppender">
