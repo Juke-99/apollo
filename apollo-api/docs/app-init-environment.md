@@ -1,9 +1,6 @@
 # AppInit & Environment
 
-Apollo applications are initialized through the
-[`AppInit`](/apollo-api/src/main/java/com/spotify/apollo/AppInit.java) interface either by
-implementing it directly or through a method reference. This allows you to have different
-initialization methods for running the service and testing it.
+Apolloアプリケーションは直接実装するかメソッドリファレンスを通してかのいずれかの[`AppInit`](/apollo-api/src/main/java/com/spotify/apollo/AppInit.java)インターフェースを初期化させます。これはサービスを起動するのとテストするための異なる初期メソッドを持つことができます。
 
 ```java
 public interface AppInit {
@@ -11,13 +8,7 @@ public interface AppInit {
 }
 ```
 
-A typical application will read values from
-[`Environment.config()`](/apollo-api/src/main/java/com/spotify/apollo/Environment.java#L48) and set
-up any application specific resources. To be properly closed when shutting down, these resources
-should be registered with
-[`Environment.closer()`](/apollo-api/src/main/java/com/spotify/apollo/Environment.java#L70). In
-addition to the resources the application should register one or more endpoints (routes) using
-[`Environment.routingEngine()`](/apollo-api/src/main/java/com/spotify/apollo/Environment.java#L72).
+普通のアプリケーションは[`Environment.config()`](/apollo-api/src/main/java/com/spotify/apollo/Environment.java#L48)から値を読み込み、何かしらの特定のアプリケーションリソースを準備します。シャッタダウンするときにちゃんと閉じるために、これらのリソースは[`Environment.closer()`](/apollo-api/src/main/java/com/spotify/apollo/Environment.java#L70)を登録させるべきです。リソースを加え、アプリケーションは[`Environment.routingEngine()`](/apollo-api/src/main/java/com/spotify/apollo/Environment.java#L72)を使う1つ以上のエンドポイントを登録するべきです。
 
 ```java
 public class DataService {

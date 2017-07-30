@@ -49,7 +49,7 @@ public final class Small {
 
 ### 2. Mavenでビルド！
 
-`apollo-http-service` to your あなたの`pom.xml`の`apollo-http-service`の依存を加えます。あなたがビルド構成をあとで必要としてからバージョンのビルドプロパティを使います。
+あなたの`pom.xml`の`apollo-http-service`の依存を加えます。あなたがビルド構成をあとで必要としてからバージョンのビルドプロパティを使います。
 
 ```xml
 <properties>
