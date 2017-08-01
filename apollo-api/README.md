@@ -3,7 +3,7 @@
 このApolloライブラリはあなたが自分のサービスルートと自分のリクエスト/リプライハンドラであるツールを与えます。いくつかの概要文書によって、以下をご覧ください：
 
 * [AppInit & Environment](docs/app-init-environment.md)
-* [ルーティングエンジン](docs/routing-engine.md)
+* [Routing Engine](docs/routing-engine.md)
 * [ルート](docs/routes.md)
 * [レスポンス](docs/response.md)
 * [ミドルウェア](docs/middleware.md)
