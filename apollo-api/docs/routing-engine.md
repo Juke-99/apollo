@@ -1,11 +1,9 @@
 # Routing Engine
 
-[`RoutingEngine`](/apollo-api/src/main/java/com/spotify/apollo/Environment.java#L72) is part of
-[`Environment`](/apollo-api/src/main/java/com/spotify/apollo/Environment.java) and it's used to
-register [`Route`](/apollo-api/src/main/java/com/spotify/apollo/route/Route.java) or
-[`RouteProvider`](/apollo-api/src/main/java/com/spotify/apollo/route/RouteProvider.java) instances.
+[`RoutingEngine`](/apollo-api/src/main/java/com/spotify/apollo/Environment.java#L72)は[`Environment`](/apollo-api/src/main/java/com/spotify/apollo/Environment.java)の一部で、[`Route`](/apollo-api/src/main/java/com/spotify/apollo/route/Route.java)もしくは
+[`RouteProvider`](/apollo-api/src/main/java/com/spotify/apollo/route/RouteProvider.java)インスタンスを登録するために使われます。
 
-## Example
+## 例
 
 ```java
 void init(Environment environment) {
@@ -15,7 +13,7 @@ void init(Environment environment) {
 }
 ```
 
-The implementation of `MyResource` as a class by itself.
+それ自身のクラスとしての`MyResource`の実装。
 
 ```java
 class MyResource implements RouteProvider {
@@ -30,17 +28,15 @@ class MyResource implements RouteProvider {
 }
 ```
 
-## Overlapping route paths
+## 重複ルートパス
 
-Say you have defined two routes that overlap in a way that makes one of them a specific case of the
-other more general one. An example of such an overlap is:
+他のより一般的な重複ルートの特定原因の一つを作る方法で重複する二つのルートを定義したとします。このような重複の例は：
 
 1. `/foo/bar`
-1. `/foo/<arg>`
+2. `/foo/<arg>`
 
-Route 2 can match calls to `/foo/bar` too, thus making route 1 a special case of route 2. In this
-case, the `RoutingEngine` will route to the more specific routes before more general ones.
+したがってルート2の特定原因であるルート1を作ることで、ルート2は`/foo/bar`の呼び出しとマッチすることができます。これのおかげで、`RoutingEngine`はより一般的なルートよりも前により特定のルートを経由します。
 
-## Path parameters
+## パスパラメータ
 
-Use `/foo/<arg:path>` to match a path parameter, that may include slashes.
+スラッシュを含めて、パスパラメータをマッチするために`/foo/<arg:path>`を使います。

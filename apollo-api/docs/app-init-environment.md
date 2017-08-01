@@ -8,7 +8,7 @@ public interface AppInit {
 }
 ```
 
-普通のアプリケーションは[`Environment.config()`](/apollo-api/src/main/java/com/spotify/apollo/Environment.java#L48)から値を読み込み、何かしらの特定のアプリケーションリソースを準備します。シャッタダウンするときにちゃんと閉じるために、これらのリソースは[`Environment.closer()`](/apollo-api/src/main/java/com/spotify/apollo/Environment.java#L70)を登録させるべきです。リソースを加え、アプリケーションは[`Environment.routingEngine()`](/apollo-api/src/main/java/com/spotify/apollo/Environment.java#L72)を使う1つ以上のエンドポイントを登録するべきです。
+普通のアプリケーションは[`Environment.config()`](/apollo-api/src/main/java/com/spotify/apollo/Environment.java#L58)から値を読み込み、何かしらの特定のアプリケーションリソースを準備します。シャッタダウンするときにちゃんと閉じるために、これらのリソースは[`Environment.closer()`](/apollo-api/src/main/java/com/spotify/apollo/Environment.java#L72)を登録させるべきです。リソースを加え、アプリケーションは[`Environment.routingEngine()`](/apollo-api/src/main/java/com/spotify/apollo/Environment.java#L65)を使う1つ以上のエンドポイントを登録するべきです。
 
 ```java
 public class DataService {
