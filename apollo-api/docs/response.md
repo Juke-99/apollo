@@ -1,10 +1,8 @@
 # Response
 
-[`Response<T>`](/apollo-api/src/main/java/com/spotify/apollo/Response.java) is an optional wrapper
-for the return type of route handlers. Use it when you want to control additional parameters of the
-service reply like setting a different status code or adding headers.
+[`Response<T>`](/apollo-api/src/main/java/com/spotify/apollo/Response.java)はルートハンドラの返す型による任意のラッパーです。あなたが異なる状態を設定するかハンドラを加えるかのようなサービスリプライの追加パラメータを操作したい時に使います。
 
-Examples:
+例：
 
 ```java
 Response<String> handle(RequestContext requestContext) {

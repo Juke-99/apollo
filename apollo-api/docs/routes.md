@@ -14,9 +14,9 @@
 
 ## ルートハンドラリプライタイプ
 
-明白な`T`型を返す代わりに、ルートハンドラは[`Response<T>`](/apollo-api/src/main/java/com/spotify/apollo/Response.java)を返します。あなたがリプライ（[Response](/apollo-api/docs/response.md)をみてください）についての追加情報をちゃんとわかるラッパーです。
+明白な`T`型を返す代わりに、ルートハンドラは[`Response<T>`](/apollo-api/src/main/java/com/spotify/apollo/Response.java)を返します。あなたがリプライ（[Response](/apollo-api/docs/response.md)をみてください）についての追加情報がちゃんとわかるラッパーです。
 
-同期/非同期とプレイン/レスポンスの組み合わせのマトリックスはこのように思われています：
+同期/非同期とプレイン/レスポンスの組み合わせのマトリックスは次のようになります：
 
 |      型        | `SyncHandler<T>` | `AsyncHandler<T>` |
 |:---------------: | -------------- | --------------- |

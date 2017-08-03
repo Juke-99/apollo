@@ -1,11 +1,10 @@
 # Apollo Extra
 
-This Apollo library contains some utilities that may make your life easier.
+このApolloライブラリはゆとりを持たせる幾らかのユーティリティを含みます。
 
 ## com.spotify.apollo.concurrent
 
-Defines a couple of utilities that make it easier to move between `ListenableFuture`s and
-`CompletionStage`s. Example usage:
+`ListenableFuture`と`CompletionStage`の間で動くことを簡単にするいくつかのユーティリティを定義します。使用例：
 
 ```java
     ListenableFuture<Message> future = listenableFutureClient.send(myRequest);
@@ -14,29 +13,19 @@ Defines a couple of utilities that make it easier to move between `ListenableFut
         .thenApply(message -> Response.forPayload(message.data()));
 ```
 
-Also defines the 
-[`ExecutorServiceCloser`](src/main/java/com/spotify/apollo/concurrent/ExecutorServiceCloser.java) 
-utility, which makes it convenient to register application-specific
-`ExecutorService` instances with the Apollo `Closer` for lifecycle 
-management.
+また、[`ExecutorServiceCloser`](src/main/java/com/spotify/apollo/concurrent/ExecutorServiceCloser.java)のユーティリティを定義します。ライフサイクル管理のApollo `Closer`によるアプリケーション特有の`ExecutorService`インスタンスを登録することが便利になります。
 
 ## com.spotify.apollo.route
 
-Contains some serializer middlewares, and utilities for versioning endpoints.
+幾らかのシリアライズするミドルウェアとバージョニングエンドポイントのユーティリティを含みます。
 
 ## com.spotify.apollo.logging
 
-NOTE: these utilities are deprecated, since they utilise request processing
-decorators, and these decorators may modify the request or response, leading
-to disagreement between the actual response and what is logged. See the
-[HttpService README](../apollo-http-service/README.md) for a description of
-the preferred way to set up logging.
+注意: リクエスト処理デコレーターを利用してから、これらのユーティリティは廃止予定で、実際のレスポンスと何かをログする間の不一致を導くことで、リクエストもしくはレスポンスを変更するかもしれません。ロギングを準備するための好ましい方法の記述については[HttpService README](../apollo-http-service/README.md)をみてください。
 
-Contains logging utilities, or more generally, a solution that allows
-subscribing for notifications of request outcomes, with a default 
-implementation that logs using the Apache HTTPD 'combined' format.
+ロギングユーティリティを含む、より一般的なものとして、Apache HTTPD'combined'フォーマットを使うログのデフォルト実装によって、リクエスト送信の通知を送ることができる解決策です。
 
-To send this to an access log file, use a configuration similar to:
+アクセスログファイルに次のものを送るために、同様の構成を使います：
 
 ```
     <appender name="ACCESSLOG" class="ch.qos.logback.core.FileAppender">
