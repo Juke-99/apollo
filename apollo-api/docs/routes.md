@@ -1,46 +1,33 @@
 # Routes
 
-There are basically two types of routes based on the type of request handler, synchronous and
-asynchronous. Each route defines basic information like method, uri, documentation string and
-handler.
+同期と非同期ごとに、リクエストハンドラの型を基本的に基にする2つのルートの型があります。それぞれのルートはメソッド、URI、文章文字列、ハンドラのような基本情報を定義します。
 
-The two main methods for creating routes are:
+ルートを作るための2つのメインメソッド：
 
 * `Route.sync(String method, String uri, SyncHandler<T> handler)`
 * `Route.async(String method, String uri, AsyncHandler<T> handler)`
 
-Since `RoutingEngine` expects routes of the type `Route<AsyncHandler<T>>`, both `Route.sync` and
-`Route.async` return a `Route<AsyncHandler<T>>` and can thus be directly used for registering
-routes.
 
-A route added with `RoutingEngine.registerAutoRoute(s)()`, or using the `Middlewares::autoSerialize`
-or `Middlewares::apolloDefaults` will serialize its response payload with the `AutoSerializer`.
-Routes added with `RoutingEngine.registerRoutes()` must return `Response<ByteString>`s, and
-no further processing will be done.
+`Route<AsyncHandler<T>>`型のルートを予想する`RoutingEngine`から、`Route.sync`と`Route.async`両方は`Route<AsyncHandler<T>>`を返し、そのおかげでルートを登録するのに直接使うことができます。
 
-## Route handler reply types
+ルートは`RoutingEngine.registerAutoRoute(s)()`を加えます。でないと`Middlewares::autoSerialize`もしくは`Middlewares::apolloDefaults`は`AutoSerializer`と一緒にそのレスポンスペイロードをシリアライズします。ルートは`RoutingEngine.registerRoutes()`が`Response<ByteString>`を返すことで加わります。そうするとさらに処理が加わるわけではありません。
 
-Instead of returning a plain type `T`, a route handler may return a
-[`Response<T>`](/apollo-api/src/main/java/com/spotify/apollo/Response.java), which is a wrapper
-where you can specify extra information about the reply (see
-[Response](/apollo-api/docs/response.md)).
+## ルートハンドラリプライタイプ
 
-The matrix of sync/async and plain/response combinations looks like this:
+明白な`T`型を返す代わりに、ルートハンドラは[`Response<T>`](/apollo-api/src/main/java/com/spotify/apollo/Response.java)を返します。あなたがリプライ（[Response](/apollo-api/docs/response.md)をみてください）についての追加情報をちゃんとわかるラッパーです。
 
-|      Type        | `SyncHandler<T>` | `AsyncHandler<T>` |
+同期/非同期とプレイン/レスポンスの組み合わせのマトリックスはこのように思われています：
+
+|      型        | `SyncHandler<T>` | `AsyncHandler<T>` |
 |:---------------: | -------------- | --------------- |
-|     **`T`**      | `T` - A plain synchronous payload replied with status code `200 OK` | `CompletionStage<T>` - A plain asynchronous payload replied with status code `200 OK` |
-| **`Response<T>`** | `Response<T>` - A synchronous payload with custom status code and headers | `CompletionStage<Response<T>>` - An asynchronous payload with custom status code and headers |
+|     **`T`**      | `T` - 同期プレインペイロードは状態コード`200 OK`をリプライします | `CompletionStage<T>` - 非同期プレインペイロードは状態コード`200 OK`をリプライします |
+| **`Response<T>`** | `Response<T>` - カスタム状態コードとハンドラによる同期ペイロードは | `CompletionStage<Response<T>>` - カスタム状態コードとハンドラによる非同期ペイロード |
 
 ## Route providers
 
-[`RouteProvider`](/apollo-api/src/main/java/com/spotify/apollo/route/RouteProvider.java) is a
-functional interface for creating a
-[`Stream`](https://docs.oracle.com/javase/8/docs/api/java/util/stream/package-summary.html)
-of routes.
+[`RouteProvider`](/apollo-api/src/main/java/com/spotify/apollo/route/RouteProvider.java)はルートの[`Stream`](https://docs.oracle.com/javase/8/docs/api/java/util/stream/package-summary.html)を作るための関数型インターフェースです。
 
-This is useful for when the application needs to group routes in some logical way and treat them
-all in bulk. A REST-ful api with endpoints grouped by resource is a common use case.
+これは、アプリケーションがいくつかの論理的な方法でルートをグループ化し、すべてを一括して扱う必要がある場合に便利です。リソースをグループ化したエンドポイントによるRESTful APIは普通のユースケースです。
 
 ```java
 static class BlogPost implements RouteProvider {
@@ -64,4 +51,5 @@ public static void init(Environment environment) {
 }
 ```
 
-For more utilities that manipulate routes, see the [`apollo-extra`](/apollo-extra) module.
+
+複数ルートをより有用にするためには、[`apollo-extra`](/apollo-extra)モジュールをみてください。

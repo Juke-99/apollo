@@ -4,7 +4,7 @@
 
 * [AppInit & Environment](docs/app-init-environment.md)
 * [Routing Engine](docs/routing-engine.md)
-* [ルート](docs/routes.md)
+* [Routes](docs/routes.md)
 * [レスポンス](docs/response.md)
 * [ミドルウェア](docs/middleware.md)
 
