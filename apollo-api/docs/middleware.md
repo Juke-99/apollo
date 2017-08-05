@@ -2,11 +2,11 @@
 
 > このセクションはルートハンドラについていくつか話しているので、[ルート](/apollo-api/docs/routes.md)ドキュメントのはじめを呼んでください。
 >
-> Java 8ラムダの大きな使用にもなります。ラムダにはもう少し詳しくこの設定でオブジェクト指向プログラミングとどのように関係するか理解するために、[Classes to Lambdas README](/apollo-api/docs/class-to-lambda.md)を呼んでください。
+> Java 8ラムダの使用が多く出てきます。ラムダについてもう少し詳しくこの設定でオブジェクト指向プログラミングがどのように関係するか理解するために、[Classes to Lambdas README](/apollo-api/docs/class-to-lambda.md)を呼んでください。
 
-ミドルウェアはルートハンドラの振る舞いを授かるのに使うことができる関数です。これはコード重複を避けるためのいくつかのルートの普通の機能性を加えるのに使うことができます。
+ミドルウェアはルートハンドラの振る舞いを授かるのに使うことができる関数です。これはコード重複を避けるためにいくつかのルートの普通の機能性を加えるのに使うことができます。
 
-なぜなら _inner_ ハンドラを授かる関数としてちょうどよく、普通の機能性のたくさんのクラスを実装するための多様なツールを提供してくれるからです。幾らかの使用例と一緒にMiddlewareを実装することができる幾らかの基本的なパターンがあります。
+なぜなら _inner_ ハンドラを授かる関数としてちょうどよく、普通の機能性のたくさんのクラスを実装するための多様なツールを提供してくれるからです。幾らかの使用例と一緒にミドルウェアを実装することができる幾らかの基本的なパターンがあります。
 
 ミドルウェアは以下のことができます：
 
@@ -28,7 +28,7 @@
 
 ## 一般例
 
-これはミドルウェアがどのように実装されるかです。コメントは、上記のさまざまなパターンがどのように実装できるか、それらが`requestContext`と` innerHandler`とどのように互いに干渉し合うかを説明します。
+これはミドルウェアを実装する方法です。コメントは、上記のさまざまなパターンがどのように実装できるか、それらが`requestContext`と` innerHandler`とどのように互いに干渉し合うかを説明します。
 
 ```java
 static <T> SyncHandler<Response<T>> myMiddleware(SyncHandler<T> innerHandler) {
@@ -67,7 +67,7 @@ static void init(Environment environment) {
 }
 ```
 
-_私たちは自分のミドルウェアが動くために定義したハンドラタイプである`SyncHandler<T>`を取得するために`Route.<SyncHandler<String>>create()`を使う必要があることに注意してください。最後に、私たちはフレームワークが呼ぶことができる`AsyncHandler<T>`の中のルートハンドラを回る`Middleware::syncToAsync`ミドルウェア（apollo-apiで定義されています）を採用します。_
+_私たちは自分のミドルウェアが取り囲むために定義されるハンドラタイプの`SyncHandler<T>`を取得するために`Route.<SyncHandler<String>>create()`を使う必要があることに注意してください。最終的に、私たちはフレームワークを呼ぶことができる`AsyncHandler<T>`の中のルートハンドラを回る`Middleware::syncToAsync`ミドルウェア（apollo-apiで定義されています）を採用します。_
 
 ## 発展： カスタムコンテキストタイプを作る
 
@@ -119,7 +119,7 @@ String whereAmI(AuthContext authContext, PagingContext pagingContext) {
 Route.create("GET", "/test", authContext -> pageContext -> whereAmI(authContext, pageContext));
 ```
 
-これはほとんど動作します。`Route.create(...)`はそのハンドラとして何かの`T`型を実際は持ってきます。しかし、Apolloは`AsyncHandler<T>`の実装出ない限りハンドラでするべきことを知りません。この場合（型を少し助けること）、ハンドラは`Function<AuthContext, Function<PagingContext, String>>`です。私たちは`AsyncHandler<String>`の中でどのように変わるかApolloと対話する必要がただあります。
+これはほとんど動作します。`Route.create(...)`はそのハンドラとして何かの`T`型を実際は持ってきます。しかし、Apolloは`AsyncHandler<T>`の実装でない限りハンドラでするべきことに気がつきません。この場合（型を少し助けること）、ハンドラは`Function<AuthContext, Function<PagingContext, String>>`です。私たちは`AsyncHandler<String>`の中でどのように変わるかApolloと対話する必要がただあります。
 
 このため、私たちは二つの関数型インターフェースをはじめに宣言します：
 
@@ -128,9 +128,9 @@ interface Authenticated<T> extends Function<AuthContext, T> {}
 interface Paged<T> extends Function<PagingContext, T> {}
 ```
 
-`Function<AuthContext, Function<PagingContext, String>>`、すなわち`Authenticated<Paged<T>>`のより良い名前を与えることが可能です。
+`Function<AuthContext, Function<PagingContext, String>>`、すなわち`Authenticated<Paged<T>>`より良い名前を与えることが可能です。
 
-私たちは自分の二つのハンドラタイプに置き換わる`Middleware`を作ります。それは`auth(RequestContext)`と`page(RequestContext)`の両方を使います。
+私たちは二つのハンドラタイプに置き換わる`Middleware`を作ります。それは`auth(RequestContext)`と`page(RequestContext)`の両方を使います。
 
 ```java
 <T> Middleware<Authenticated<Paged<T>>, AsyncHandler<T>> authPaged() {
