@@ -1,4 +1,4 @@
-# Routing Engine
+# ルーティングエンジン
 
 [`RoutingEngine`](/apollo-api/src/main/java/com/spotify/apollo/Environment.java#L72)は[`Environment`](/apollo-api/src/main/java/com/spotify/apollo/Environment.java)の一部で、[`Route`](/apollo-api/src/main/java/com/spotify/apollo/route/Route.java)もしくは
 [`RouteProvider`](/apollo-api/src/main/java/com/spotify/apollo/route/RouteProvider.java)インスタンスを登録するために使われます。

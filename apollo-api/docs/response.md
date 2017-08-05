@@ -1,4 +1,4 @@
-# Response
+# レスポンス
 
 [`Response<T>`](/apollo-api/src/main/java/com/spotify/apollo/Response.java)はルートハンドラの返す型による任意のラッパーです。あなたが異なる状態を設定するかハンドラを加えるかのようなサービスリプライの追加パラメータを操作したい時に使います。
 

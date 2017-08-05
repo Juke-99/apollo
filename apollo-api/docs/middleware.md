@@ -1,40 +1,34 @@
-# Middleware
+# ミドルウェア
 
-> This section talks a lot about route handlers, so make sure to read the [Routes](/apollo-api/docs/routes.md) doc first.
+> このセクションはルートハンドラについていくつか話しているので、[ルート](/apollo-api/docs/routes.md)ドキュメントのはじめを呼んでください。
 >
-> It also makes heavy use of Java 8 lambdas. To get a bit more familiar with lambdas and how they
-> relate to object oriented programming in this setting, read the [Classes to Lambdas README](/apollo-api/docs/class-to-lambda.md).
+> Java 8ラムダの大きな使用にもなります。ラムダにはもう少し詳しくこの設定でオブジェクト指向プログラミングとどのように関係するか理解するために、[Classes to Lambdas README](/apollo-api/docs/class-to-lambda.md)を呼んでください。
 
-Middlewares are functions that can be used to decorate the behavior of a route handler. This
-can be used to add common functionality to several routes avoiding code duplication.
+ミドルウェアはルートハンドラの振る舞いを授かるのに使うことができる関数です。これはコード重複を避けるためのいくつかのルートの普通の機能性を加えるのに使うことができます。
 
-Because they are just functions that decorate an _inner_ handler, they provide a versatile tool for
-implementing many classes of common functionality. These are some of the basic patterns that can
-be implemented with Middleware together with some example uses.
+なぜなら _inner_ ハンドラを授かる関数としてちょうどよく、普通の機能性のたくさんのクラスを実装するための多様なツールを提供してくれるからです。幾らかの使用例と一緒にMiddlewareを実装することができる幾らかの基本的なパターンがあります。
 
-A middleware can:
+ミドルウェアは以下のことができます：
 
-* Do something and then continue by transparently calling the inner handler
- * Logging requests
- * Collecting statistics
- * Darkloading other code paths
-* Decide not to call the inner handler and instead respond to the request directly
- * ACL checks
- * Request validation
-* After calling the inner handler, modify the response before replying
- * Add caching headers
- * Selecting response representation of a payload based on request headers
-* Call the inner handler after modifying the request context in some way
- * Modifying the incoming request for compatibility reasons during code migration
- * Modifying the behavior of the request scoped client
-* Call the inner handler multiple times
- * Retrying in case of recoverable failures
+* 何かをして、内側のハンドラを透過的に呼び出すことで続行
+ * ロギングリクエスト
+ * 統計収集
+ * 他のコードパスをダークロード
+* 内部ハンドラを呼び出さず、代わりにリクエストに直接応答することを決定
+ * ACLテェック
+ * リクエスト検証
+* 内側のハンドラを呼んだ後に、リプライ前にレスポンスを編集
+ * キャッシングハンドラの追加
+ * リクエストハンドラを基にしたペイロードのレスポンス表現の選択
+* 幾らかの方法でリクエストコンテキストを編集した後に内側のハンドラの呼び出し
+ * コード移植間の互換性上の理由のための受信リクエストの編集
+ * 詳しく調べられたリクエストクライアントの振る舞いの編集
+* 内側のハンドラを複数回の呼び出し
+ * 取り戻し可能な障害の状況のリトライ
 
-## Generic Example
+## 一般例
 
-This is how a middleware can be implemented. The comments outline how the different patterns
-mentioned above can be implemented and how they interact with the `requestContext` and the
-`innerHandler`.
+これはミドルウェアがどのように実装されるかです。コメントは、上記のさまざまなパターンがどのように実装できるか、それらが`requestContext`と` innerHandler`とどのように互いに干渉し合うかを説明します。
 
 ```java
 static <T> SyncHandler<Response<T>> myMiddleware(SyncHandler<T> innerHandler) {
@@ -60,7 +54,7 @@ static <T> SyncHandler<Response<T>> myMiddleware(SyncHandler<T> innerHandler) {
 }
 ```
 
-This middleware can then be used together with route definitions.
+このミドルウェアはルート定義と一緒に使うことができます。
 
 ```java
 static void init(Environment environment) {
@@ -73,15 +67,11 @@ static void init(Environment environment) {
 }
 ```
 
-_Note the we need to use `Route.<SyncHandler<String>>create()` to obtain a `SyncHandler<T>` which is
-the handler type our middleware is defined to work on. In the end we apply the
-`Middleware::syncToAsync` middleware (defined in apollo-api) which turns the route handler into an
-`AsyncHandler<T>` which the framework can call._
+_私たちは自分のミドルウェアが動くために定義したハンドラタイプである`SyncHandler<T>`を取得するために`Route.<SyncHandler<String>>create()`を使う必要があることに注意してください。最後に、私たちはフレームワークが呼ぶことができる`AsyncHandler<T>`の中のルートハンドラを回る`Middleware::syncToAsync`ミドルウェア（apollo-apiで定義されています）を採用します。_
 
-## Advanced: Creating custom context types
+## 発展： カスタムコンテキストタイプを作る
 
-In our application, we'll have a mechanism for paging and authenticating requests. We'll model it
-with these context types:
+アプリケーションで、私たちはリクエストをページングし、証明するためのマシンを持ちます。私たちはこれらのコンテキストタイプを手本にします：
 
 ```java
 interface AuthContext {
@@ -93,11 +83,9 @@ interface PagingContext {
 }
 ```
 
-Two simple interfaces containing the information for an authenticated and a paged request. Note that
-so far the two contexts have nothing to do with each other. We'll get to how they will be used
-together.
+証明され、ページされたリクエストの情報を構成する二つの単純なインターフェースです。二つのコンテキストがお互いにそれほど関係しないことに注意してください。私たちはどのように一緒に使用されるのかを見ていきます。
 
-The implementation of how to create these contexts will just be plain functions:
+これらのコンテキストをどのように作成するかの実装は単なる関数です：
 
 ```java
 PagingContext page(RequestContext c) {
@@ -115,10 +103,9 @@ AuthContext auth(RequestContext c) {
 }
 ```
 
-So far so good. These are very straight forward. Just plain Java and Apollo is not even involved
-yet.
+ここまでは順調ですね。ここからは一歩進んで行きます。まさに明確なJavaとApolloはまだ含んでいません。
 
-Next, we'll turn to an endpoint that uses both contexts to produce a plain `String` response.
+次に、私たちは明確な`String`レスポンスを作るためのコンテキストを両方使うエンドポイントを回します。
 
 ```java
 String whereAmI(AuthContext authContext, PagingContext pagingContext) {
@@ -126,31 +113,24 @@ String whereAmI(AuthContext authContext, PagingContext pagingContext) {
 }
 ```
 
-So how would we bind this endpoint to a `Route` that will have both an `AuthContext` and a
-`PagingContext` available to it? Preferably we would like something as simple as this:
+では、このエンドポイントを`AuthContext`と`PagingContext`の両方を持つ`Route`にどのようにバインドするのでしょうか？なるべく、私たちは次のように単純なものを好みます：
 
 ```java
 Route.create("GET", "/test", authContext -> pageContext -> whereAmI(authContext, pageContext));
 ```
 
-This almost works. `Route.create(...)` can actually take any type `T` as its handler. But Apollo
-wouldn't know what to do with that handler unless it's an implementation of `AsyncHandler<T>`.
-In this case (with a little help for the types) the handler would be a
-`Function<AuthContext, Function<PagingContext, String>>`. We only need to tell
-Apollo how to convert that into an `AsyncHandler<String>`.
+これはほとんど動作します。`Route.create(...)`はそのハンドラとして何かの`T`型を実際は持ってきます。しかし、Apolloは`AsyncHandler<T>`の実装出ない限りハンドラでするべきことを知りません。この場合（型を少し助けること）、ハンドラは`Function<AuthContext, Function<PagingContext, String>>`です。私たちは`AsyncHandler<String>`の中でどのように変わるかApolloと対話する必要がただあります。
 
-To do this, we first declare two functional interfaces:
+このため、私たちは二つの関数型インターフェースをはじめに宣言します：
 
 ```java
 interface Authenticated<T> extends Function<AuthContext, T> {}
 interface Paged<T> extends Function<PagingContext, T> {}
 ```
 
-These enable us to give a better name to `Function<AuthContext, Function<PagingContext, String>>`,
-namely `Authenticated<Paged<T>>`.
+`Function<AuthContext, Function<PagingContext, String>>`、すなわち`Authenticated<Paged<T>>`のより良い名前を与えることが可能です。
 
-Then we create a `Middleware` that converts between our two handler types. It will use both
-`auth(RequestContext)` and `page(RequestContext)`.
+私たちは自分の二つのハンドラタイプに置き換わる`Middleware`を作ります。それは`auth(RequestContext)`と`page(RequestContext)`の両方を使います。
 
 ```java
 <T> Middleware<Authenticated<Paged<T>>, AsyncHandler<T>> authPaged() {
@@ -163,19 +143,16 @@ Then we create a `Middleware` that converts between our two handler types. It wi
 }
 ```
 
-One can create one of these for any combination of contexts your application needs, or just one
-with a bigger type that will contain all of the contexts all together. The important thing is that
-it will be re-used to define many `Route`s.
+アプリケーションが必要とするあらゆるコンテキストの組み合わせに対して、またはすべてのコンテキストをまとめて含むより大きなタイプのコンテキストのいずれかを作成できます。重要なことはそれがたくさんの`Route`を定義することで再利用されるということです。
 
-Finally we can define `Route`s using the factory method which will help infer the types of the
-handler lambda and make the whole thing look as nice as this:
+最後に、私たちはハンドララムダの型を推測する手助けをするファクトリーメソッドを使うのに`Route`を定義し、同じくらい素晴らしく全体を見せます：
 
 ```java
 Route<AsyncHandler<String>> route =
     Route.with(authPaged(), "GET", "/test", auth -> page -> whereAmI(auth, page));
 ```
 
-Mounting this with the `RoutingEngine` and making some requests to it, we'll get:
+`RoutingEngine`によって開始し、幾らかのリクエストを作ります。以下は実行した例です：
 
 ```
 $ curl 'http://localhost:8080/ping/test'
